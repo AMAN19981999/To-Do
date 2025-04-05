@@ -65,7 +65,8 @@ export default function TaskList() {
         {["all", "completed", "pending"].map((f) => (
           <button
             key={f}
-            onClick={() => setFilter(f as any)}
+            onClick={() => setFilter(f as "all" | "completed" | "pending")}
+
             className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
               filter === f
                 ? " bg-gray-800 text-white"

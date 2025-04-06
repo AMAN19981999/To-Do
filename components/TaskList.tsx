@@ -24,23 +24,55 @@ export default function TaskList() {
     fetchTasks();
   }, []);
 
+  // const updateTask = async (id: number, completed: boolean) => {
+  //   await fetch(`/api/tasks/${id}`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify({ completed }),
+  //   });
+  //   fetchTasks();
+  // };
+
+  // const updateTaskTitle = async (id: number, title: string) => {
+  //   await fetch(`/api/tasks/${id}`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify({ title }),
+  //   });
+  //   setEditingId(null);
+  //   setEditingTitle("");
+  //   fetchTasks();
+  // };
+ 
+
   const updateTask = async (id: number, completed: boolean) => {
     await fetch(`/api/tasks/${id}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json", // ✅ This is important
+      },
       body: JSON.stringify({ completed }),
     });
     fetchTasks();
   };
-
+  
   const updateTaskTitle = async (id: number, title: string) => {
     await fetch(`/api/tasks/${id}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json", // ✅ This is important
+      },
       body: JSON.stringify({ title }),
     });
     setEditingId(null);
     setEditingTitle("");
     fetchTasks();
   };
+  
+
+
+
+
+
+
 
   const deleteTask = async (id: number) => {
     await fetch(`/api/tasks/${id}`, { method: "DELETE" });

@@ -16,7 +16,33 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
 }
 
 // DELETE /api/tasks/[id]
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
-  await db.delete(tasks).where(eq(tasks.id, Number(context.params.id)));
-  return NextResponse.json({ message: "Deleted" });
-}
+// export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+//   await db.delete(tasks).where(eq(tasks.id, Number(context.params.id)));
+//   return NextResponse.json({ message: "Deleted" });
+// }
+
+
+// export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+//     console.log("DELETE called with params:", context.params);
+  
+//     const taskId = Number(context.params.id);
+//     if (isNaN(taskId)) {
+//       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+//     }
+  
+//     await db.delete(tasks).where(eq(tasks.id, taskId));
+//     return NextResponse.json({ message: "Deleted" });
+//   }
+  
+
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params; // 👈 await the Promise
+  
+    const taskId = Number(id);
+    if (isNaN(taskId)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+    }
+  
+    await db.delete(tasks).where(eq(tasks.id, taskId));
+    return NextResponse.json({ message: "Deleted" });
+  }

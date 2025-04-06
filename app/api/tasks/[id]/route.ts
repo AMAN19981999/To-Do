@@ -26,7 +26,7 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
   }
 
 export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
-    const { id } = await context.params; // 👈 await the Promise
+    const { id } = await context.params; 
   
     const taskId = Number(id);
     if (isNaN(taskId)) {
